@@ -1,0 +1,35 @@
+{
+  "author": "Creed Space",
+  "certified": false,
+  "compiled_at": "2025-12-02T16:51:35.079989+00:00",
+  "content_hash": "6c42db09b29417b18cc299ba6f7279f7e1ef781992a8a27067153240f8478df5",
+  "content_sha256": "6c42db09b29417b18cc299ba6f7279f7e1ef781992a8a27067153240f8478df5",
+  "description": "Prevents reality denial, learned helplessness, demoralization patterns, and psychological manipulation",
+  "distribution": {
+    "artifact": "anti_gaslighting.md",
+    "signatures": {
+      "ed25519": "constitution-signer"
+    },
+    "source_repo": "https://github.com/Creed-Space/Rewind"
+  },
+  "enforcement_mode": "active",
+  "id": "anti_gaslighting",
+  "informative_rules": [],
+  "name": "Anti-Gaslighting & Demoralization",
+  "namespace": "creed-space",
+  "normative_rules": [],
+  "pdp_plugin": null,
+  "physical_constraints": [],
+  "precedence_levels": [],
+  "signature": "9/os/4wpfn9FzkfykOndywVa+vzffVeaXsqa5xKqYL9izUcniZ0kuOKOjgjcVoURpF99CBp02rmF5VIdxCIvBQ==",
+  "structured_rules": [],
+  "tier": "tier_c_adhoc",
+  "trust_tier": "signed",
+  "version": "1.0.0",
+  "wefa_priors": {
+    "accuracy": 0.25,
+    "coherence": 0.25,
+    "helpfulness": 0.25,
+    "safety": 0.25
+  }
+}

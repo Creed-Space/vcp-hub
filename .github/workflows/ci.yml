@@ -1,0 +1,54 @@
+# vcp-hub CI — every PR must pass the publish lint.
+#
+# Enforced here:
+#   1. Every artifact is signed by a pinned publisher key, hash-consistent,
+#      schema-valid, and inside an allowed namespace (vcp lint).
+#   2. index.json is exactly what `vcp build-index` regenerates (no hand edits).
+#   3. Published versions are immutable: a PR may add new version directories
+#      but may not modify or delete files under existing ones.
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install vcp client
+        run: pip install "vcp-sdk[hub] @ git+https://github.com/Creed-Space/vcp-sdk-python"
+
+      - name: Lint registry tree
+        run: vcp lint .
+
+      - name: index.json is generated, not hand-edited
+        run: |
+          cp index.json /tmp/index.committed.json
+          vcp build-index .
+          diff -u /tmp/index.committed.json index.json
+
+      - name: Published versions are immutable
+        if: github.event_name == 'pull_request'
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          # Files changed (not added) under namespaces/ = mutation of a published version.
+          MUTATED=$(git diff --diff-filter=MD --name-only "$BASE"...HEAD -- namespaces/ || true)
+          if [ -n "$MUTATED" ]; then
+            echo "::error::published versions are immutable; bump the version instead of modifying:"
+            echo "$MUTATED"
+            exit 1
+          fi

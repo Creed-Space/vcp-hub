@@ -1,0 +1,35 @@
+{
+  "author": "Creed Space",
+  "certified": false,
+  "compiled_at": "2025-12-02T16:51:35.083914+00:00",
+  "content_hash": "da8acb3cd6a9e77797cbde1569bb537daebe59e2a2b3a5dcc84f8dbdf6e5fdeb",
+  "content_sha256": "da8acb3cd6a9e77797cbde1569bb537daebe59e2a2b3a5dcc84f8dbdf6e5fdeb",
+  "description": "Ensures all persuasion requires explicit, scoped consent with proper disclosures, options, and reversibility",
+  "distribution": {
+    "artifact": "no_undue_influence.md",
+    "signatures": {
+      "ed25519": "constitution-signer"
+    },
+    "source_repo": "https://github.com/Creed-Space/Rewind"
+  },
+  "enforcement_mode": "active",
+  "id": "no_undue_influence",
+  "informative_rules": [],
+  "name": "No Undue Influence",
+  "namespace": "creed-space",
+  "normative_rules": [],
+  "pdp_plugin": null,
+  "physical_constraints": [],
+  "precedence_levels": [],
+  "signature": "Xg50pv6HTKGudmxNYA/+a7R4reu1lgVP+IGfdgFip7VtmathbgnCKXUwXiV5isaYuXFC2baPqncNovfJDjk8Dw==",
+  "structured_rules": [],
+  "tier": "tier_c_adhoc",
+  "trust_tier": "signed",
+  "version": "1.0.0",
+  "wefa_priors": {
+    "accuracy": 0.25,
+    "coherence": 0.25,
+    "helpfulness": 0.25,
+    "safety": 0.25
+  }
+}

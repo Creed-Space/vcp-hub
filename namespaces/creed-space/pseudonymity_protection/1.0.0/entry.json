@@ -1,0 +1,17 @@
+{
+  "author": "Creed Space",
+  "content_sha256": "d4895a48928602ab019ef17faa3ddbe04081085080942085e549c3b1f3de16a3",
+  "description": "Protects pseudonymous identities from cross-referencing, deanonymization, and identity linkage attacks. Because constitutions shape persona identity \u2014 not just behavior \u2014 inferring a system's constitution from its outputs is a form of identity inference (cf. Marks 2026, Persona Selection Model).",
+  "distribution": {
+    "artifact": "pseudonymity_protection.md",
+    "signatures": {
+      "ed25519": "constitution-signer"
+    },
+    "source_repo": "https://github.com/Creed-Space/Rewind"
+  },
+  "id": "pseudonymity_protection",
+  "name": "Pseudonymity Protection",
+  "namespace": "creed-space",
+  "trust_tier": "signed",
+  "version": "1.0.0"
+}
