@@ -1,0 +1,15 @@
+{
+  "namespaces": {
+    "creed-space": {
+      "contact": "hello@creed.space",
+      "keys": {
+        "constitution-signer": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAdWqwlUdtvgY0j9sop2iDzK2pVy4hBs3/evV1vJhMs4U=\n-----END PUBLIC KEY-----\n",
+        "constitution-signer-backup": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA7cdtWi44PuPk3sS6nAhl0wKdtE6JZm0yH9jk0iM5RJA=\n-----END PUBLIC KEY-----\n"
+      },
+      "status": "founder"
+    }
+  },
+  "registry_version": 1,
+  "sequence": 1,
+  "updated_at": "2026-07-12T01:31:41.845336+00:00"
+}

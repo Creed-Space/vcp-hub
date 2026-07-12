@@ -4,6 +4,7 @@
       "latest": "1.0.0",
       "versions": {
         "1.0.0": {
+          "artifact": "accountability_amendment_risk_checks.md",
           "content_sha256": "c2d890e9cc95f2c0efa58562e1e632ec962bc143100a27f5ea8ee8c7d4d8186d",
           "description": "Defines procedures for human oversight, conflict resolution, and checks and misalignment detection. NOTE: This module includes support for 1-5 Scale adherence level, corresponding to: 1: Basic Monitoring (Minimal intervention), 2: Moderate Oversight (Regular checking), 3: Standard Accountability (Default - systematic safety protocols), 4: Strict Enforcement (Aggressive intervention), 5: Maximum Security (Full control)",
           "name": "Accountability & Risk Checks",
@@ -19,6 +20,7 @@
       "latest": "1.0.0",
       "versions": {
         "1.0.0": {
+          "artifact": "anti_gaslighting.md",
           "content_sha256": "6c42db09b29417b18cc299ba6f7279f7e1ef781992a8a27067153240f8478df5",
           "description": "Prevents reality denial, learned helplessness, demoralization patterns, and psychological manipulation",
           "name": "Anti-Gaslighting & Demoralization",
@@ -34,6 +36,7 @@
       "latest": "1.0.0",
       "versions": {
         "1.0.0": {
+          "artifact": "no_undue_influence.md",
           "content_sha256": "da8acb3cd6a9e77797cbde1569bb537daebe59e2a2b3a5dcc84f8dbdf6e5fdeb",
           "description": "Ensures all persuasion requires explicit, scoped consent with proper disclosures, options, and reversibility",
           "name": "No Undue Influence",
@@ -49,6 +52,7 @@
       "latest": "1.0.0",
       "versions": {
         "1.0.0": {
+          "artifact": "pseudonymity_protection.md",
           "content_sha256": "d4895a48928602ab019ef17faa3ddbe04081085080942085e549c3b1f3de16a3",
           "description": "Protects pseudonymous identities from cross-referencing, deanonymization, and identity linkage attacks. Because constitutions shape persona identity \u2014 not just behavior \u2014 inferring a system's constitution from its outputs is a form of identity inference (cf. Marks 2026, Persona Selection Model).",
           "name": "Pseudonymity Protection",
@@ -64,6 +68,7 @@
       "latest": "1.0.0",
       "versions": {
         "1.0.0": {
+          "artifact": "UEF.md",
           "content_sha256": "11de95ff8df417474551904b3e18066cdff5eab6bc3465eb14e41800e9f15a78",
           "description": "The foundational ethical framework defining non-negotiable baseline adaptive, context-aware implementation across different severity levels. NOTE: This module includes support for 1-5 Scale adherence level, corresponding to: 1: Basic Safety (Core harm prevention), 2: Standard Protection (Active harm mitigation), 3: Proactive Ethics (Default - systematic ethical enforcement), 4: Vigilant Safeguarding (Enhanced detection and prevention), 5: Maximum Security (Zero tolerance with immediate response)",
           "name": "Universal Ethical Floor (UEF)",
@@ -71,10 +76,11 @@
             "ed25519"
           ],
           "tier": "tier_a_certified",
-          "trust_tier": "signed"
+          "trust_tier": "verified"
         }
       }
     }
   },
-  "index_version": 1
+  "index_version": 2,
+  "sequence": 2
 }

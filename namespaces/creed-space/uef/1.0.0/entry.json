@@ -7,6 +7,9 @@
   "description": "The foundational ethical framework defining non-negotiable baseline adaptive, context-aware implementation across different severity levels. NOTE: This module includes support for 1-5 Scale adherence level, corresponding to: 1: Basic Safety (Core harm prevention), 2: Standard Protection (Active harm mitigation), 3: Proactive Ethics (Default - systematic ethical enforcement), 4: Vigilant Safeguarding (Enhanced detection and prevention), 5: Maximum Security (Zero tolerance with immediate response)",
   "distribution": {
     "artifact": "UEF.md",
+    "counter_signatures": {
+      "ed25519": "constitution-signer"
+    },
     "signatures": {
       "ed25519": "constitution-signer"
     },
@@ -257,7 +260,7 @@
   "signature": "7cnqQSLFLlxjX2a+3oAz+gK50lVRjwCBdZp/3HmB9jkZ4LV7StM5fi23Tbyi369DE6xKGtX7FRoYj4plka3QAQ==",
   "structured_rules": [],
   "tier": "tier_a_certified",
-  "trust_tier": "signed",
+  "trust_tier": "verified",
   "version": "1.0.0",
   "wefa_priors": {
     "accuracy": 0.2,

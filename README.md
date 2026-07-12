@@ -30,17 +30,21 @@ target directory and pins `name@version` + content sha256 in `vcp.lock`.
 | Tier | Meaning |
 |------|---------|
 | `signed` | The artifact's Ed25519 signature verifies against a pinned Creed Space publisher key, its content hash matches its registry entry, and the entry is schema-valid. **This does NOT vouch for the artifact's semantics** — only that it is exactly what its publisher signed. |
-| `verified` | Everything `signed` guarantees, **plus** constitution lint, red-team evaluation, and a Creed Space counter-signature. This is the semantic gate. **No `verified` artifacts are issued yet.** |
+| `verified` | Everything `signed` guarantees, **plus** constitution lint, red-team evaluation, and a domain-separated Creed Space **counter-signature** that the client checks against the pinned root. This is the semantic gate — issuance criteria are in [GOVERNANCE.md](GOVERNANCE.md). |
 
 The client displays the tier at install time. A `signed` artifact is never
 presented as `verified`.
 
-## Namespace policy (launch)
+## Namespace policy — community publishing is OPEN
 
-Publishing is **locked to the `creed-space` namespace**. Community namespaces
-(and confusable variants such as `creed_space` or `creedspace`, which are
-rejected outright) stay closed until a moderation process and the `verified`
-tier exist. Opening them is an explicit governance decision, not a PR.
+Namespaces are governed by the root-signed **`namespace_registry.json`**: each
+namespace is bound to its publisher's Ed25519 keys, the binding is signed by
+the pinned Creed Space root, and clients refuse artifacts not signed by a key
+registered to their namespace. To register yours, open a PR using the
+namespace-registration template — name rules, review, the signing ceremony,
+moderation, and revocation are all specified in [GOVERNANCE.md](GOVERNANCE.md).
+Confusable variants of existing names (`creed_space`, `creedspace`, homoglyph
+squats) are rejected by the client and CI, not just by policy.
 
 ## Publishing rules
 
@@ -63,12 +67,16 @@ tier exist. Opening them is an explicit governance decision, not a PR.
 ## Layout
 
 ```
-index.json                  generated — never edit by hand (vcp build-index .)
-namespaces/creed-space/<id>/<version>/
-    <artifact>              the signed artifact (data)
-    <artifact>.ed25519.sig  Ed25519 signature sidecar
-    entry.json              schema-valid registry entry
-keys/                       publisher public keys FOR DISPLAY ONLY
+index.json                       generated — never edit by hand (vcp build-index .)
+namespace_registry.json          namespace -> publisher keys, ROOT-SIGNED
+namespace_registry.json.ed25519.sig
+namespaces/<namespace>/<id>/<version>/
+    <artifact>                   the signed artifact (data)
+    <artifact>.ed25519.sig       publisher signature sidecar
+    <artifact>.ed25519.countersig  root counter-signature (verified tier only)
+    entry.json                   schema-valid registry entry
+keys/                            publisher public keys FOR DISPLAY ONLY
+GOVERNANCE.md                    registration, moderation, tiers, revocation
 ```
 
 **Trust-root note:** the keys in `keys/` are published for human inspection.

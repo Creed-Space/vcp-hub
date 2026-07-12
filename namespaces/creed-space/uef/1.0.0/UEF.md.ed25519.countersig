@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "algorithm": "Ed25519",
+  "key_id": "constitution-signer",
+  "content_hash": "11de95ff8df417474551904b3e18066cdff5eab6bc3465eb14e41800e9f15a78",
+  "signed_at": "2026-07-12T01:31:46.367124+00:00",
+  "signature": "LgPq3ZuRP/ZVyTiWLiIx83aWEmg6VXbjT6kbYxNCLw8couTWRqDDLYo3SPqZmTn7VbmA6AMhmB7p+jreWY3bCg==",
+  "purpose": "creed-commons-verified-tier:creed-space/uef@1.0.0"
+}
