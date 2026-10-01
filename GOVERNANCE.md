@@ -54,7 +54,8 @@ flow, in public.
    plausible publisher identity, key well-formedness, no impersonation of an
    organization you do not represent.
 4. **Signing ceremony**: a maintainer applies the entry with
-   `scripts/build_namespace_registry.py --add …` in the source repo, which
+   `scripts/build_namespace_registry.py --add …` in the source repo
+   (Creed-Space/Rewind, which is private), which
    bumps the registry sequence, re-signs `namespace_registry.json` with the
    root key, and self-verifies as a client would; releases then run
    `scripts/hub_release.py` to bump and re-sign the index. Only maintainers

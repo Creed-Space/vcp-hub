@@ -85,7 +85,9 @@ allowlist precisely so this registry cannot vouch for itself.
 
 ## Provenance
 
-Artifacts are authored and signed in
-[Creed-Space/Rewind](https://github.com/Creed-Space/Rewind) and seeded here via
-`scripts/seed_vcp_hub.py`. The signing keys are Creed Space's
-`constitution-signer` (+ backup) Ed25519 keys.
+Artifacts are authored and signed in Creed Space's source repository
+(Creed-Space/Rewind, which is private) and seeded here via
+`scripts/seed_vcp_hub.py` in that repository. The signing keys are Creed
+Space's `constitution-signer` (+ backup) Ed25519 keys. Clients verify
+signatures against the pinned keys and do not need access to the source
+repository.
