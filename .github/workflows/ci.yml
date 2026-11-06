@@ -10,7 +10,12 @@
 #      signature + monotonic sequence (the release ceremony); PRs cannot sign,
 #      so they lint with --pr and a maintainer runs the ceremony on merge.
 #   3. Published versions are immutable: a PR may add new version directories
-#      but may not modify or delete files under existing ones.
+#      but may not add, modify, delete or rename files under existing ones
+#      (counter-signing ceremony fields excepted: trust_tier may only go up and
+#      a countersig is never deleted; the one-time v1 -> v2 sidecar re-sign is
+#      allowed when content_sha256, key_id and ref are unchanged), and the root-signed
+#      namespace_registry.json / index.json sequences never go backwards
+#      (.github/scripts/check_published_immutability.py).
 name: ci
 
 on:
@@ -50,20 +55,26 @@ jobs:
           vcp build-index .
           diff -u /tmp/index.committed.json index.json
 
-      - name: Published versions are immutable
+      - name: Published versions are immutable; trust documents never roll back
         if: github.event_name == 'pull_request'
         env:
           BASE: ${{ github.event.pull_request.base.sha }}
         run: |
-          # Files changed (not added) under namespaces/ = mutation of a published
-          # version. Exception: entry.json may change during the verified-tier
-          # counter-signing ceremony (GOVERNANCE.md) — its load-bearing fields
-          # (id/version/namespace/content_sha256/tier-vs-countersig agreement)
-          # are all re-pinned by `vcp lint` above, so drift there still fails CI.
-          # Artifact bytes and publisher signatures are immutable, no exceptions.
-          MUTATED=$(git diff --diff-filter=MD --name-only "$BASE"...HEAD -- namespaces/ | grep -v '/entry.json$' || true)
-          if [ -n "$MUTATED" ]; then
-            echo "::error::published versions are immutable; bump the version instead of modifying:"
-            echo "$MUTATED"
-            exit 1
-          fi
+          set -euo pipefail
+          # Every path under an existing version directory is frozen (adds,
+          # edits, deletes, renames). Only the counter-signing ceremony may
+          # touch it: entry.json's trust_tier / distribution.counter_signatures
+          # and the <artifact>.ed25519.countersig sidecar, and only upward: the
+          # tier never drops and a countersig is never deleted. The one exception
+          # outside the ceremony is the v1 -> v2 sidecar re-sign with the same
+          # content_sha256, key_id and ref. namespace_registry.json and
+          # index.json may not go back to a lower sequence.
+          python3 .github/scripts/check_published_immutability.py --base "$BASE"
+
+      - name: Trust documents never roll back (push)
+        if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
+        env:
+          BASE: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/check_published_immutability.py --base "$BASE" --sequences-only

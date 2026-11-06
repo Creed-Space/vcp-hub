@@ -17,9 +17,15 @@ flow, in public.
   root key id or root key material (client-refused, not just policy).
 - **Signed metadata**: `index.json` (version resolution, hashes, tiers) is
   root-signed in its own domain and carries a monotonic **sequence**; clients
-  record the highest sequence seen in `vcp.lock` and refuse anything lower, so
-  a validly-signed but stale index or registry cannot be replayed to re-admit
-  revoked keys or downgrade versions after first contact. The unsigned
+  record the highest sequence seen in `vcp.lock` (both `vcp install` and
+  `vcp verify --registry` raise it) and refuse anything lower, so a
+  validly-signed but stale index or registry cannot be replayed to re-admit
+  revoked keys or downgrade versions after first contact. The index also
+  carries a root-signed `issued_at` (and optional `expires_at`); clients
+  refuse an index older than 30 days (configurable via
+  `RegistryClient(max_index_age=...)`), so **the release ceremony must
+  re-sign index.json at least every 30 days**. The one pre-freshness index
+  (sequence 2) is accepted by exact hash until it is re-signed. The unsigned
   `entry.json` is cross-checked against the signed index at install time.
 - **Tier issuance**: `signed` is proven by the publisher's signature.
   `verified` is proven ONLY by a root counter-signature
@@ -34,9 +40,12 @@ flow, in public.
   re-checking every pin against the live root-signed index.
 - **Residual risk, stated honestly**: a client's very FIRST contact with a
   registry has no sequence high-water mark, so a transport attacker could
-  serve it a stale-but-signed snapshot once. Subsequent installs detect any
-  rollback. (The standard fix is a TUF-style timestamp role; adopt it if the
-  ecosystem grows to warrant it.)
+  serve it a stale-but-signed snapshot once, and a client that never saw a
+  revoking release can be shown the previous index until that index ages
+  past the max age. Subsequent installs and verifies detect any rollback
+  below what they have seen. (Narrowing the window further needs a TUF-style
+  timestamp role with short expiry; adopt it if the ecosystem grows to
+  warrant it.)
 
 ## Registering a community namespace
 
@@ -67,8 +76,18 @@ Everything in the README's publishing rules, plus:
 
 - Artifacts in your namespace must be signed by a key registered to your
   namespace. CI (`vcp lint .`) refuses anything else.
+- The publisher signature is bound to the exact ref: it signs
+  `"creed-commons-artifact-v2\0" + "<namespace>/<id>@<version>" + "\0" + <artifact bytes>`
+  (`vcp.hub.artifact_message_context(ref)` builds the prefix), and the
+  `.ed25519.sig` sidecar carries `"version": 2` and `"ref"`. Signed bytes
+  therefore cannot be republished under another namespace, id, or version.
+  Content-only (v1) signatures are honoured only for the artifacts shipped
+  before ref binding, pinned in the client by exact ref and hash.
 - Versions are immutable — in content AND provenance. Changing bytes or the
-  recorded signer of a published version is refused; bump the version.
+  recorded signer of a published version is refused; bump the version. CI
+  freezes every file under an existing version directory (additions included);
+  only the counter-signing ceremony may change `entry.json`'s `trust_tier` and
+  `distribution.counter_signatures` and add the `.ed25519.countersig`.
 - Only `trust_tier: signed` may be self-published. The `verified` tier is
   issued by Creed Space (below).
 
